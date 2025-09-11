@@ -1,17 +1,20 @@
 const createRequest = (options = {}) => {
-    const xhr = new XMLHttpRequest;
+    const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     let url = options.url;
-    const formData = new FormData();
+    let formData = null;
 
     if (options.method === 'GET') {
+        const params = new URLSearchParams();
         for (let key in options.data) {
-            url = options.data;
+            params.append(key, options.data[key]);
         }
+        url += '?' + params.toString();
     } else {
+        formData = new FormData();
         for (let key in options.data) {
-            formData =
+            formData.append(key, options.data[key]);
         }
     }
 
@@ -20,11 +23,11 @@ const createRequest = (options = {}) => {
         xhr.send(formData);
     }
     catch (e) {
-        // перехват сетевой ошибки
         callback(e);
+    }
+
+    xhr.onload = function () {
+        options.callback(null, xhr.response);
     }
 }
 
-xhr.onload = function () {
-    options.callback(null, xhr.response);
-}
