@@ -4,12 +4,13 @@
  * Имеет свойство URL, равное '/user'.
  * */
 class User {
+  static url = '/user';
   /**
    * Устанавливает текущего пользователя в
    * локальном хранилище.
    * */
   static setCurrent(user) {
-
+    localStorage.setItem('user');
   }
 
   /**
@@ -17,7 +18,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-
+    localStorage.removeItem('user');
   }
 
   /**
@@ -25,7 +26,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-
+    localStorage.getItem('user');
   }
 
   /**
@@ -33,7 +34,20 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-
+    // ...
+    const xhr = createRequest({
+      // ...
+      // задаём функцию обратного вызова
+      callback(err, response) {
+        if (response && response.user) {
+          User.setCurrent(response.user);
+        }
+        // ...
+        // вызываем параметр, переданный в метод fetch
+        callback(err, response);
+      }
+      // ...
+    });
   }
 
   /**

@@ -6,15 +6,19 @@ const createRequest = (options = {}) => {
     let formData = null;
 
     if (options.method === 'GET') {
-        const params = new URLSearchParams();
-        for (let key in options.data) {
-            params.append(key, options.data[key]);
+        if (options.data) {
+            const params = new URLSearchParams();
+            for (let key in options.data) {
+                params.append(key, options.data[key]);
+            }
+            url += '?' + params.toString();
         }
-        url += '?' + params.toString();
     } else {
-        formData = new FormData();
-        for (let key in options.data) {
-            formData.append(key, options.data[key]);
+        if (options.data) {
+            formData = new FormData();
+            for (let key in options.data) {
+                formData.append(key, options.data[key]);
+            }
         }
     }
 
