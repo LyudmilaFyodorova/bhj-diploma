@@ -5,20 +5,16 @@ const createRequest = (options = {}) => {
     let url = options.url;
     let formData = null;
 
-    if (options.method === 'GET') {
-        if (options.data) {
-            const params = new URLSearchParams();
-            for (let key in options.data) {
-                params.append(key, options.data[key]);
-            }
-            url += '?' + params.toString();
+    if (options.method === 'GET' && options.data) {
+        const params = new URLSearchParams();
+        for (let key in options.data) {
+            params.append(key, options.data[key]);
         }
-    } else {
-        if (options.data) {
-            formData = new FormData();
-            for (let key in options.data) {
-                formData.append(key, options.data[key]);
-            }
+        url += '?' + params.toString();
+    } else if (options.method !== 'GET' && options.data) {
+        formData = new FormData();
+        for (let key in options.data) {
+            formData.append(key, options.data[key]);
         }
     }
 
