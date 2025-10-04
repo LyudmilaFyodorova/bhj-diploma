@@ -26,13 +26,9 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    let userData = localStorage.getItem('user');
-    if (userData) {
-      return JSON.parse(userData);
-    } else {
-      return undefined;
-    }
+    return JSON.parse(localStorage.getItem('user'));
   }
+
 
   /**
    * Получает информацию о текущем
@@ -51,13 +47,10 @@ class User {
 
         if (response.success) {
           this.setCurrent(response.user);
-          callback(null, response);
-
         } else {
           this.unsetCurrent();
-          callback(null, response);
-
         }
+        callback(null, response);
       }
     });
   }
