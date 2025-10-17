@@ -27,13 +27,14 @@ class Modal {
   registerEvents() {
     const dismissElements = this.element.querySelectorAll('[data-dismiss="modal"]');
 
-    dismissElements.forEach((e) => {
-      e.addEventListener('click', (event) => {
-        event.preventDefault();
-        this.close();
+    dismissElements.forEach((element) => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.onClose(e);
       });
-    });
+    })
   }
+
 
   /**
    * Срабатывает после нажатия на элементы, закрывающие окно.
@@ -53,6 +54,6 @@ class Modal {
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close() {
-    this.element.style.display = '';
+    this.element.style.display = 'none';
   }
 }

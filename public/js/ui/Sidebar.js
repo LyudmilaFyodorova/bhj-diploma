@@ -40,21 +40,21 @@ class Sidebar {
     const menuItemLogout = document.querySelector('.menu-item_logout');
 
     menuItemRegister.addEventListener('click', () => {
-      const modalRegister = App.getModal('modal-register');
+      const modalRegister = App.getModal('register');
       modalRegister.open();
     })
 
     menuItemLogin.addEventListener('click', () => {
-      const modalLogin = App.getModal('modal-login');
+      const modalLogin = App.getModal('login');
       modalLogin.open();
     })
 
     menuItemLogout.addEventListener('click', () => {
-      User.logout();
-
-      if (response.success === true) {
-        App.setState('init');
-      }
+      User.logout((err, response) => {
+        if (response && response.success) {
+          App.setState('init');
+        }
+      })
     })
   }
 }
