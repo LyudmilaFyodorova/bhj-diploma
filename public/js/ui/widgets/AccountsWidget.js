@@ -32,14 +32,13 @@ class AccountsWidget {
    * */
   registerEvents() {
     const createAccount = this.element.querySelector('.create-account');
-    const accountsPanel = this.element.querySelector('.accounts-panel');
 
     createAccount.addEventListener('click', () => {
       const modalNewAccount = App.getModal('createAccount');
       modalNewAccount.open();
-    })
+    });
 
-    accountsPanel.addEventListener('click', (event) => {
+    this.element.addEventListener('click', (event) => {
       const account = event.target.closest('.account');
       if (account) {
         event.preventDefault();

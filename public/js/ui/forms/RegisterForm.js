@@ -11,13 +11,11 @@ class RegisterForm extends AsyncForm {
    * */
   onSubmit(data) {
     User.register(data, (err, response) => {
-      if (response && response.success === true) {
+      if (response && response.success) {
         this.element.reset();
         App.setState('user-logged');
 
-        const parentModal = this.element.closest('.modal');
-
-        const modalWindow = App.getModal(parentModal.id);
+        const modalWindow = App.getModal('register');
 
         modalWindow.close();
       }

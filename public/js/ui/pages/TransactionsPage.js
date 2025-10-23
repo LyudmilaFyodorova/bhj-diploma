@@ -36,18 +36,22 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    const removeAccount = this.element.querySelector('.remove-account');
-    const removeTransactions = this.element.querySelectorAll('.transaction__remove');
 
-    removeAccount.addEventListener('click', () => {
-      this.removeAccount();
-    })
+    const contentWrapper = this.element.querySelector('.content-wrapper');
 
-    removeTransactions.forEach(element => {
-      element.addEventListener('click', () => {
-        const transactionId = element.dataset.id;
+    contentWrapper.addEventListener('click', (event) => {
+      const removeAccount = event.target.closest('.remove-account');
+      if (removeAccount) {
+        event.preventDefault();
+        this.removeAccount();
+      }
+
+      const removeTransactions = event.target.closest('.transaction__remove');
+      if (removeTransactions) {
+        event.preventDefault();
+        const transactionId = removeTransactions.dataset.id;
         this.removeTransaction(transactionId);
-      })
+      }
     })
   }
 
