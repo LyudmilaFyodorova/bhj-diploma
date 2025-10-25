@@ -37,9 +37,7 @@ class TransactionsPage {
    * */
   registerEvents() {
 
-    const contentWrapper = this.element.querySelector('.content-wrapper');
-
-    contentWrapper.addEventListener('click', (event) => {
+    this.element.addEventListener('click', (event) => {
       const removeAccount = event.target.closest('.remove-account');
       if (removeAccount) {
         event.preventDefault();
@@ -77,10 +75,11 @@ class TransactionsPage {
 
     const accountId = this.lastOptions.account_id;
 
-    Account.remove(accountId, (err, response) => {
+    Account.remove({ id: accountId }, (err, response) => {
       if (response && response.success) {
         App.updateWidgets();
         App.updateForms();
+        this.clear();
       }
     })
   }
@@ -98,7 +97,7 @@ class TransactionsPage {
       return;
     }
 
-    Transaction.remove(id, (err, response) => {
+    Transaction.remove({ id: id }, (err, response) => {
       if (response && response.success) {
         App.update();
       }
@@ -120,7 +119,7 @@ class TransactionsPage {
 
     Account.get(options.account_id, (err, response) => {
       if (response && response.success) {
-        this.renderTitle(response.data);
+        this.renderTitle(response.data.name);
       }
     })
 
@@ -164,11 +163,11 @@ class TransactionsPage {
       'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
     ];
 
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const day = dateElement.getDate();
+    const month = months[dateElement.getMonth()];
+    const year = dateElement.getFullYear();
+    const hours = dateElement.getHours().toString().padStart(2, '0');
+    const minutes = dateElement.getMinutes().toString().padStart(2, '0');
 
     return `${day} ${month} ${year} г. в ${hours}:${minutes}`;
   }

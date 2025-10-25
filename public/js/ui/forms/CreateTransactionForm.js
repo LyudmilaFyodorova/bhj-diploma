@@ -51,10 +51,14 @@ class CreateTransactionForm extends AsyncForm {
 
         const modalElement = this.element.closest('.modal');
         if (modalElement) {
-          const modal = App.getModal(modalElement.id);
-          modal.close();
+          const modalId = modalElement.dataset.modalId;
+          if (modalId) {
+            const modal = App.getModal(modalId);
+            if (modal) {
+              modal.close();
+            }
+          }
         }
-        App.update();
       }
     })
   }
